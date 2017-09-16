@@ -6,9 +6,10 @@ I wanted to have an easier way. Just a git push to a special repo.
 
 ## Usage
 
+
 ### Usage with docker
 
-If you have 
+If you have docker installed, this is the most simple way:
 ```
 docker run --rm -v $PWD:$PWD -w $PWD --entrypoint /hooks/pre-receive lalyos/bigit
 ```
@@ -17,11 +18,12 @@ By default you see the top 10 files, if you want to see more use the **BIGIT_TOP
 ```
 docker run --rm -e BIGIT_TOP=5 -v $PWD:$PWD -w $PWD --entrypoint /hooks/pre-receive lalyos/bigit
 ```
+
 ### Usage with cmd.io
 
-If you dont have docker installed locally,
-
-To install the git-receive-pack command to your own cmd.io account:
+If you dont have docker installed locally, you can use cmd.io which only relies on ssh client.
+You can register to cmd.io with your github account at: (https://www.cmd.io)[https://www.cmd.io]. 
+Once you are given access to cmd.io, install the git-receive-pack command into your own cmd.io account:
 ```
 ssh alpha.cmd.io :add git-receive-pack lalyos/bigit
 ```
