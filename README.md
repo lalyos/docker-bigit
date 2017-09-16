@@ -6,9 +6,21 @@ I wanted to have an easier way. Just a git push to a special repo.
 
 ## Usage
 
+
+### Via cmd.io
+
+If you dont have docker installed locally,
+
+To install the git-receive-pack command to your own cmd.io account:
 ```
-git remote add bigit ssh://lalyos@beta.cmd.io/tmp/delme
-git push biggit
+ssh alpha.cmd.io :add git-receive-pack lalyos/bigit
+```
+
+Now you can use it by:
+```
+git push alpha.cmd.io:/tmp/delme
+
+
 ```
 
 ## tl;dr
