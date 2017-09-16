@@ -3,8 +3,14 @@
 help() {
   cat <<"EOF"
 ##########################
-# bigit usage :
-# eval "$(docker run --rm lalyos/bigit --functions)"
+finding the bigest blobs in a local git repo:
+ 
+$ docker run --rm -v $PWD:$PWD -w $PWD --entrypoint /hooks/pre-receive lalyos/bigit
+
+If you want to run a local git/ssh server and git push against it:
+
+$ eval "$(docker run --rm lalyos/bigit --functions)"
+$ bigit-git-push
 ##########################
 EOF
 }

@@ -6,8 +6,18 @@ I wanted to have an easier way. Just a git push to a special repo.
 
 ## Usage
 
+### Usage with docker
 
-### Via cmd.io
+If you have 
+```
+docker run --rm -v $PWD:$PWD -w $PWD --entrypoint /hooks/pre-receive lalyos/bigit
+```
+
+By default you see the top 10 files, if you want to see more use the **BIGIT_TOP** en var:
+```
+docker run --rm -e BIGIT_TOP=5 -v $PWD:$PWD -w $PWD --entrypoint /hooks/pre-receive lalyos/bigit
+```
+### Usage with cmd.io
 
 If you dont have docker installed locally,
 
@@ -18,9 +28,31 @@ ssh alpha.cmd.io :add git-receive-pack lalyos/bigit
 
 Now you can use it by:
 ```
-git push alpha.cmd.io:/tmp/delme
+git push alpha.cmd.io:/delme
+
+```
 
 
+### Usage with git server running in docker 
+
+This scenario will run a git/ssh server inside of a container, and you can **git push** against it.
+To make complex commands easier to run, there a couple of **bigit-xxx** bash functions, which you can
+install locally
+
+```
+eval "$(docker run --rm lalyos/bigit --functions)"
+bigit-git-push
+```
+
+You can even play with the git hook:
+```
+bigit-edit-hook
+```
+
+If you mess it up and want to start from scratch just restart the git/ssh server:
+```
+bigit-stop-server
+bigit-start-server
 ```
 
 ## tl;dr
