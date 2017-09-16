@@ -1,8 +1,7 @@
-#!/bin/sh -x          
+#!/bin/sh -x
 
 rm -rf $1 && git init --quiet --bare $1     
 #cp /hooks/pre-receive $1/hooks/pre-receive                                         
 cp /hooks/pre-receive $1/hooks/post-update                                          
 
 git-shell -c "git-receive-pack '$1'"
-   

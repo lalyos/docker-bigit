@@ -1,10 +1,14 @@
 FROM alpine
 
-RUN apk add -U git coreutils
+RUN apk add -U git coreutils bash
 RUN apk add -U openssh
 RUN ssh-keygen -A
 
-COPY ./git-receive /bin/git-receive
+COPY ./git-receive /bin/
+COPY ./bigit-functions /bin/
+COPY ./entrypoint /bin/
 COPY ./pre-receive /hooks/
 
-ENTRYPOINT ["/bin/git-receive"]
+ENV BIGIT_TOP 10
+
+ENTRYPOINT ["/bin/entrypoint"]

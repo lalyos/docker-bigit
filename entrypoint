@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+case $1 in
+  --help) 
+    cat <<"EOF"
+##########################
+# bigit usage :
+# eval "$(docker run lalyos/bigit --functions)"
+##########################
+EOF
+    ;;
+
+  --functions)
+    sed '/main()/,$ d' /bin/bigit-functions
+    ;;
+
+  *)
+    /bin/git-receive "$@"
+    ;;
+esac

@@ -19,3 +19,10 @@ I got the idee from [gliderlabs cmd wiki](https://github.com/gliderlabs/cmd/wiki
 ## License
 
 MIT
+
+## References:
+
+- https://stackoverflow.com/questions/10622179/how-to-find-identify-large-files-commits-in-git-history#42544963
+- https://stackoverflow.com/questions/223678/which-commit-has-this-blob#223890
+- https://github.com/rtyley/bfg-repo-cleaner
+

@@ -1,0 +1,65 @@
+#!/bin/bash
+
+bigit-debug() {
+  echo "---> $@" 1>&2
+}
+
+bigit-start-server() {
+  declare desc="starts sshd server with gitrecive"
+
+  if ! docker container inspect bigit &> /dev/null ;then
+    bigit-debug $desc
+    docker run -d \
+      -p 22 \
+      --name bigit \
+      -v $HOME/.ssh/id_rsa.pub:/root/.ssh/authorized_keys \
+      --entrypoint /usr/sbin/sshd \
+        lalyos/bigit -D
+  else
+    bigit-debug git/ssh server is already runnning
+  fi
+}
+
+bigit-ssh-config() {
+  declare desc="creates .ssh_config with 'bigit' alias to git/ssh server"
+
+  bigit-debug $desc
+  local sshPort=$(docker inspect -f '{{(index (index .NetworkSettings.Ports "22/tcp") 0).HostPort}}' bigit)
+  cat > .ssh_config <<EOF
+Host bigit
+  User root
+  Hostname localhost
+  Port ${sshPort}
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+EOF
+}
+
+bigit-git-push() {
+  declare desc="executes a git push agains the git/ssh server container"
+
+  bigit-start-server
+  bigit-ssh-config
+  bigit-debug $desc
+  GIT_SSH_COMMAND="ssh -F ./.ssh_config" git push --receive-pack=/bin/git-receive  bigit:/tmp/delme.git
+}
+
+bigit-edit-hook() {
+  declare desc="opens git hook in vi"
+
+  bigit-debug $desc
+  docker exec -it bigit vi /hooks/pre-receive
+}
+
+bigit-stop-server() {
+  declare desc="stops ssh/git server"
+
+  bigit-debug $desc
+  docker rm -f bigit &> /dev/null
+}
+
+main() {
+  : ${DEBUG:=1}
+}
+
+[[ "$0" == "$BASH_SOURCE" ]] && main "$@" || true
