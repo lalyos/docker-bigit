@@ -6,7 +6,7 @@ case $1 in
     cat <<"EOF"
 ##########################
 # bigit usage :
-# eval "$(docker run lalyos/bigit --functions)"
+# eval "$(docker run --rm lalyos/bigit --functions)"
 ##########################
 EOF
     ;;
